@@ -127,6 +127,15 @@
         "loving"
       ],
       "id": "12"
+    },
+    {
+      "name": "Joey",
+      "species": "Zebra",
+      "diet": "piscivore",
+      "personalityTraits": [
+        "zany"
+      ],
+      "id": "13"
     }
   ]
 }
