@@ -117,6 +117,16 @@
         "hungry"
       ],
       "id": "11"
+    },
+    {
+      "name": "Tony",
+      "species": "bear",
+      "diet": "carnivore",
+      "personalityTraits": [
+        "anxious",
+        "loving"
+      ],
+      "id": "12"
     }
   ]
 }

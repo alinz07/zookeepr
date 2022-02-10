@@ -11,6 +11,10 @@ app.use(express.urlencoded({ extended: true}));
 //parse income JSON data
 app.use(express.json());
 
+//instructs server to make certain files readily available and to not gate it behind a server endpoint
+//this way we don't have to have endpoints for all of our html, css and js files.
+app.use(express.static('public'));
+
 const { animals } = require('./data/animals.json');
 
 function filterByQuery(query, animalsArray) {
@@ -60,7 +64,9 @@ function createNewAnimal(body, animalsArray) {
     const animal = body;
     animalsArray.push(animal);
     fs.writeFileSync(
+        //joins the value of the directoiry where we execute cody '__dirname' with the path to the animals.json file
         path.join(__dirname, './data/animals.json'),
+        //converts the array named animals to json
         JSON.stringify({animals: animalsArray}, null, 2)
     );
     return animal;
@@ -108,10 +114,26 @@ app.post('/api/animals', (req,res) => {
         res.status(400).send('The animal is not properly formatted.');
     } else {
         const animal = createNewAnimal(req.body, animals);
+        //sends the data back to the client
         res.json(animal);
     }
 })
 
+app.get('/', (req,res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+})
+
+app.get('/animals', (req,res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+})
+
+app.get('/zookeepers', (req,res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+})
+
+app.get('*', (req,res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+})
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
